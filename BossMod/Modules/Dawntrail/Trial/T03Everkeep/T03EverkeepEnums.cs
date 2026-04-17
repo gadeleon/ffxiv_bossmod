@@ -35,4 +35,5 @@ public enum AID : uint
 
     // === Phase 2 (BossP2 / Zoraal Ja Vollok form, OID 0x42B4) ===
     DawnOfAnAge = 37716, // BossP2->self, 6.7s cast, raidwide + arena transition (distinct from Ex2 AID 37783)
+    Actualize = 37718, // BossP2->self, 4.7s cast, raidwide (distinct from Ex2 AID 37784 at 5.0s)
 }
