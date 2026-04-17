@@ -3,6 +3,7 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 class SoulOverflow(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflow);
 class SoulOverflowEnrage(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflowEnrage);
 class PatricidalPique(BossModule module) : Components.SingleTargetCast(module, AID.PatricidalPique);
+class CalamitysEdge(BossModule module) : Components.RaidwideCast(module, AID.CalamitysEdge);
 
 class T03EverkeepStates : StateMachineBuilder
 {
@@ -11,7 +12,8 @@ class T03EverkeepStates : StateMachineBuilder
         TrivialPhase()
             .ActivateOnEnter<SoulOverflow>()
             .ActivateOnEnter<SoulOverflowEnrage>()
-            .ActivateOnEnter<PatricidalPique>();
+            .ActivateOnEnter<PatricidalPique>()
+            .ActivateOnEnter<CalamitysEdge>();
     }
 }
 
