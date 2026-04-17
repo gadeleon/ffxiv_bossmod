@@ -32,4 +32,7 @@ public enum AID : uint
     // Double-edged Swords: two half-arena cleaves in sequence (forward-then-backward)
     DoubleEdgedSwordsVisual = 37713, // Boss->self, 4.1s cast, single-target visual (mechanic start)
     DoubleEdgedSwordsAOE = 37714, // Helper->self, 4.7s cast, range 60 width 120 rect (half-arena cleave; 2 casters with opposite rotations fire ~2.3s apart)
+
+    // === Phase 2 (BossP2 / Zoraal Ja Vollok form, OID 0x42B4) ===
+    DawnOfAnAge = 37716, // BossP2->self, 6.7s cast, raidwide + arena transition (distinct from Ex2 AID 37783)
 }
