@@ -60,4 +60,8 @@ public enum AID : uint
     // Half Full: half-arena cleave (single variant observed in replay, west-facing)
     HalfFullVisual = 37737, // BossP2->self, 5.7s cast, visual only (self-status, no player damage)
     HalfFullAOE = 37738, // Helper->self, 6.0s cast, range 60 width 120 rect, actual cleave
+
+    // Bitter Reaping: two simultaneous single-target tankbusters on MT + OT (distinct from Ex2 Bitter Whirlwind which is 3-hit tank-swap)
+    BitterReapingVisual = 37753, // BossP2->self, 4.1s cast, visual only
+    BitterReapingAOE = 37754, // Helper->player, 4.7s cast, single-target tankbuster (2 simultaneous casts targeting MT + Wuk/OT)
 }
