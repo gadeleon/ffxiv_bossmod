@@ -10,6 +10,7 @@ public enum OID : uint
     ShadowOfTuralSword = 0x42AC, // spawn during fight, later wave
     ShadowOfTuralSpear = 0x42AD, // spawn during fight, later wave
     // 0x42B0..0x42B3 observed in replay; purpose TBD (phase 2 adds or fang variants)
+    FangSmall = 0x42B6, // R1.000, spawn during fight, Phase 2 Fang that telegraphs Chasm of Vollok preview
 }
 
 public enum AID : uint
@@ -36,4 +37,10 @@ public enum AID : uint
     // === Phase 2 (BossP2 / Zoraal Ja Vollok form, OID 0x42B4) ===
     DawnOfAnAge = 37716, // BossP2->self, 6.7s cast, raidwide + arena transition (distinct from Ex2 AID 37783)
     Actualize = 37718, // BossP2->self, 4.7s cast, raidwide (distinct from Ex2 AID 37784 at 5.0s)
+
+    // Chasm of Vollok chain: Vollok spawns Fangs -> preview telegraphs at fang positions -> Sync -> helper AOEs resolve at same positions
+    Vollok = 37719, // BossP2->self, 3.7s cast, visual (spawns FangSmall actors in a grid, no player damage)
+    ChasmOfVollokPreview = 37720, // FangSmall->self, 6.7s cast, 5x5 rect telegraph, no player damage
+    Sync = 37721, // BossP2->self, 4.7s cast, visual (activates AOEs), no player damage
+    ChasmOfVollokAOE = 37722, // Helper->self, 0.7s cast, range 5 width 5 rect (final damage; positions match preview in Normal - no mirroring)
 }
