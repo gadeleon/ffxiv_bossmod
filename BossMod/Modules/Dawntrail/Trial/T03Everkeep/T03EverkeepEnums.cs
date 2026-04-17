@@ -28,4 +28,8 @@ public enum AID : uint
     VorpalTrailSprint = 37711, // Fang->self, 0.7s cast, internal sprint tick (no player damage)
     VorpalTrailAOE = 37712, // Helper->location, 2.0s cast, range 6 circle (trail puddle)
     VorpalTrailTelegraph = 38184, // Helper->location, 4.0s cast, 0-hit path telegraph
+
+    // Double-edged Swords: two half-arena cleaves in sequence (forward-then-backward)
+    DoubleEdgedSwordsVisual = 37713, // Boss->self, 4.1s cast, single-target visual (mechanic start)
+    DoubleEdgedSwordsAOE = 37714, // Helper->self, 4.7s cast, range 60 width 120 rect (half-arena cleave; 2 casters with opposite rotations fire ~2.3s apart)
 }

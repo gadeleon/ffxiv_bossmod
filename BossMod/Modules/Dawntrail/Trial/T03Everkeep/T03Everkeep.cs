@@ -6,6 +6,7 @@ class PatricidalPique(BossModule module) : Components.SingleTargetCast(module, A
 class CalamitysEdge(BossModule module) : Components.RaidwideCast(module, AID.CalamitysEdge);
 class Burst(BossModule module) : Components.StandardAOEs(module, AID.Burst, new AOEShapeCircle(8));
 class VorpalTrail(BossModule module) : Components.StandardAOEs(module, AID.VorpalTrailAOE, new AOEShapeCircle(6));
+class DoubleEdgedSwords(BossModule module) : Components.StandardAOEs(module, AID.DoubleEdgedSwordsAOE, new AOEShapeRect(60, 60));
 
 class T03EverkeepStates : StateMachineBuilder
 {
@@ -17,7 +18,8 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<PatricidalPique>()
             .ActivateOnEnter<CalamitysEdge>()
             .ActivateOnEnter<Burst>()
-            .ActivateOnEnter<VorpalTrail>();
+            .ActivateOnEnter<VorpalTrail>()
+            .ActivateOnEnter<DoubleEdgedSwords>();
     }
 }
 
