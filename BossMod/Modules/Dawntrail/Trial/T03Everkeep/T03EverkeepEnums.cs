@@ -19,4 +19,5 @@ public enum AID : uint
     // === Phase 1 ===
     SoulOverflow = 37707, // Boss->self, 4.7s cast, raidwide
     SoulOverflowEnrage = 37744, // Boss->self, 6.7s cast, raidwide + inflicts bleed DoT (phase transition / enrage)
+    PatricidalPique = 37715, // Boss->MT, 4.7s cast, single-target tankbuster
 }
