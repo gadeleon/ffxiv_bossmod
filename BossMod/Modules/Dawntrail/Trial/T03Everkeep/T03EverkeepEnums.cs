@@ -43,4 +43,7 @@ public enum AID : uint
     ChasmOfVollokPreview = 37720, // FangSmall->self, 6.7s cast, 5x5 rect telegraph, no player damage
     Sync = 37721, // BossP2->self, 4.7s cast, visual (activates AOEs), no player damage
     ChasmOfVollokAOE = 37722, // Helper->self, 0.7s cast, range 5 width 5 rect (final damage; positions match preview in Normal - no mirroring)
+
+    // Gateway / Blade Warp / Forged Track chain: boss creates portals -> places swords -> charges along them
+    Gateway = 37723, // BossP2->self, 3.7s cast, visual (spawns portals/gateways, no player damage)
 }
