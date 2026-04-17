@@ -1,6 +1,6 @@
 namespace BossMod.Dawntrail.Trial.T03Everkeep;
 
-[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "Gabriel Deleon", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
+[ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "Gabriel Deleon", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
 public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), new ArenaBoundsCircle(20))
 {
     private Actor? _bossP2;
