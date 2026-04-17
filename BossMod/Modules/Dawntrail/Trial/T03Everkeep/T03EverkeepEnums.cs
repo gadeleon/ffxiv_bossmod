@@ -11,6 +11,7 @@ public enum OID : uint
     ShadowOfTuralSpear = 0x42AD, // spawn during fight, later wave
     // 0x42B0..0x42B3 observed in replay; purpose TBD (phase 2 adds or fang variants)
     FangSmall = 0x42B6, // R1.000, spawn during fight, Phase 2 Fang that telegraphs Chasm of Vollok preview
+    HalfCircuitHelper = 0x42B9, // R10.050, spawn during fight, casts Smiting Circuit visuals (shared OID with Ex2)
 }
 
 public enum AID : uint
@@ -71,4 +72,11 @@ public enum AID : uint
     HalfCircuitRect = 37741, // Helper->self, 7.0s cast, range 60 width 120 rect (always fires, rotation varies)
     HalfCircuitDonut = 37742, // Helper->self, 6.7s cast, range 10-30 donut (center safe)
     HalfCircuitCircle = 37743, // Helper->self, 6.7s cast, range 10 circle (outer safe)
+
+    // Smiting Circuit: precursor mechanic to Half Circuit (fires before it), donut OR circle center variant. Distinct from Ex2 where these are visuals.
+    SmitingCircuitVisual = 37731, // BossP2->self, 6.7s cast, visual only
+    SmitingCircuitHelperDonut = 37732, // HalfCircuitHelper->self, visual pairing for donut variant (shared AID with Ex2)
+    SmitingCircuitHelperCircle = 37733, // HalfCircuitHelper->self, visual pairing for circle variant (shared AID with Ex2)
+    SmitingCircuitDonutAOE = 37734, // Helper->self, 6.7s cast, range 10-30 donut (inside safe)
+    SmitingCircuitCircleAOE = 37735, // Helper->self, 6.7s cast, range 10 circle (outside safe)
 }

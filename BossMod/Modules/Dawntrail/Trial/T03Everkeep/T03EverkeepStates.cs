@@ -36,7 +36,9 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<BitterReaping>()
             .ActivateOnEnter<HalfCircuitRect>()
             .ActivateOnEnter<HalfCircuitDonut>()
-            .ActivateOnEnter<HalfCircuitCircle>();
+            .ActivateOnEnter<HalfCircuitCircle>()
+            .ActivateOnEnter<SmitingCircuitDonut>()
+            .ActivateOnEnter<SmitingCircuitCircle>();
         // phase 2 mechanics activated as they are implemented
     }
 }
