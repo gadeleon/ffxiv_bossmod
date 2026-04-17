@@ -1,27 +1,20 @@
 namespace BossMod.Dawntrail.Trial.T03Everkeep;
 
-class SoulOverflow(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflow);
-class SoulOverflowEnrage(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflowEnrage);
-class PatricidalPique(BossModule module) : Components.SingleTargetCast(module, AID.PatricidalPique);
-class CalamitysEdge(BossModule module) : Components.RaidwideCast(module, AID.CalamitysEdge);
-class Burst(BossModule module) : Components.StandardAOEs(module, AID.Burst, new AOEShapeCircle(8));
-class VorpalTrail(BossModule module) : Components.StandardAOEs(module, AID.VorpalTrailAOE, new AOEShapeCircle(6));
-class DoubleEdgedSwords(BossModule module) : Components.StandardAOEs(module, AID.DoubleEdgedSwordsAOE, new AOEShapeRect(60, 60));
-
-class T03EverkeepStates : StateMachineBuilder
+[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "Gabriel Deleon", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
+public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), new ArenaBoundsCircle(20))
 {
-    public T03EverkeepStates(BossModule module) : base(module)
+    private Actor? _bossP2;
+    public Actor? BossP1() => PrimaryActor;
+    public Actor? BossP2() => _bossP2;
+
+    protected override void UpdateModule()
     {
-        TrivialPhase()
-            .ActivateOnEnter<SoulOverflow>()
-            .ActivateOnEnter<SoulOverflowEnrage>()
-            .ActivateOnEnter<PatricidalPique>()
-            .ActivateOnEnter<CalamitysEdge>()
-            .ActivateOnEnter<Burst>()
-            .ActivateOnEnter<VorpalTrail>()
-            .ActivateOnEnter<DoubleEdgedSwords>();
+        _bossP2 ??= StateMachine.ActivePhaseIndex > 0 ? Enemies(OID.BossP2).FirstOrDefault() : null;
+    }
+
+    protected override void DrawEnemies(int pcSlot, Actor pc)
+    {
+        Arena.Actor(PrimaryActor, ArenaColor.Enemy);
+        Arena.Actor(_bossP2, ArenaColor.Enemy);
     }
 }
-
-[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "Gabriel Deleon", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
-public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), new ArenaBoundsCircle(20));
