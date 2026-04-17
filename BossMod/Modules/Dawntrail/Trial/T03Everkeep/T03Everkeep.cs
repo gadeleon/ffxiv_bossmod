@@ -5,6 +5,7 @@ class SoulOverflowEnrage(BossModule module) : Components.RaidwideCast(module, AI
 class PatricidalPique(BossModule module) : Components.SingleTargetCast(module, AID.PatricidalPique);
 class CalamitysEdge(BossModule module) : Components.RaidwideCast(module, AID.CalamitysEdge);
 class Burst(BossModule module) : Components.StandardAOEs(module, AID.Burst, new AOEShapeCircle(8));
+class VorpalTrail(BossModule module) : Components.StandardAOEs(module, AID.VorpalTrailAOE, new AOEShapeCircle(6));
 
 class T03EverkeepStates : StateMachineBuilder
 {
@@ -15,7 +16,8 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<SoulOverflowEnrage>()
             .ActivateOnEnter<PatricidalPique>()
             .ActivateOnEnter<CalamitysEdge>()
-            .ActivateOnEnter<Burst>();
+            .ActivateOnEnter<Burst>()
+            .ActivateOnEnter<VorpalTrail>();
     }
 }
 

@@ -22,4 +22,10 @@ public enum AID : uint
     PatricidalPique = 37715, // Boss->MT, 4.7s cast, single-target tankbuster
     CalamitysEdge = 37708, // Boss->self, 4.7s cast, raidwide
     Burst = 37709, // ShadowOfTural->self, 7.7s cast, range 8 circle (8 adds spawn in a pattern, each casts)
+
+    // Vorpal Trail: Fang adds charge across arena leaving a trail of circles
+    VorpalTrailVisual = 37710, // Boss->self, 3.4s cast, single-target visual (mechanic start)
+    VorpalTrailSprint = 37711, // Fang->self, 0.7s cast, internal sprint tick (no player damage)
+    VorpalTrailAOE = 37712, // Helper->location, 2.0s cast, range 6 circle (trail puddle)
+    VorpalTrailTelegraph = 38184, // Helper->location, 4.0s cast, 0-hit path telegraph
 }
