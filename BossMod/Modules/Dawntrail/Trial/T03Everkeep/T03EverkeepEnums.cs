@@ -56,4 +56,8 @@ public enum AID : uint
     DutysEdgeVisual = 37748, // BossP2->self, 4.6s cast, visual (mechanic start)
     DutysEdgeRepeat = 37749, // BossP2->self, 2.1s cast, visual (fires 4x repeated with 37750)
     DutysEdgeAOE = 37750, // Helper->self, instant, range 100 width 8 rect line-stack (distinct from Ex2 AID 38055)
+
+    // Half Full: half-arena cleave (single variant observed in replay, west-facing)
+    HalfFullVisual = 37737, // BossP2->self, 5.7s cast, visual only (self-status, no player damage)
+    HalfFullAOE = 37738, // Helper->self, 6.0s cast, range 60 width 120 rect, actual cleave
 }

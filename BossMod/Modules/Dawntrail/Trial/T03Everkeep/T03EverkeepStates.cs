@@ -31,7 +31,8 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<DawnOfAnAge>()
             .ActivateOnEnter<Actualize>()
             .ActivateOnEnter<ChasmOfVollok>()
-            .ActivateOnEnter<DutysEdge>();
+            .ActivateOnEnter<DutysEdge>()
+            .ActivateOnEnter<HalfFull>();
         // phase 2 mechanics activated as they are implemented
     }
 }
