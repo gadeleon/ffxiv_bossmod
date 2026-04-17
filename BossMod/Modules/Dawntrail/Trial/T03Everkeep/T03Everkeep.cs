@@ -1,0 +1,17 @@
+namespace BossMod.Dawntrail.Trial.T03Everkeep;
+
+class SoulOverflow(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflow);
+class SoulOverflowEnrage(BossModule module) : Components.RaidwideCast(module, AID.SoulOverflowEnrage);
+
+class T03EverkeepStates : StateMachineBuilder
+{
+    public T03EverkeepStates(BossModule module) : base(module)
+    {
+        TrivialPhase()
+            .ActivateOnEnter<SoulOverflow>()
+            .ActivateOnEnter<SoulOverflowEnrage>();
+    }
+}
+
+[ModuleInfo(BossModuleInfo.Maturity.WIP, Contributors = "Gabriel Deleon", GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
+public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), new ArenaBoundsCircle(20));
