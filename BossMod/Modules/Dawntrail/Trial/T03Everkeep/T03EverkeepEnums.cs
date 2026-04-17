@@ -46,4 +46,8 @@ public enum AID : uint
 
     // Gateway / Blade Warp / Forged Track chain: boss creates portals -> places swords -> charges along them
     Gateway = 37723, // BossP2->self, 3.7s cast, visual (spawns portals/gateways, no player damage)
+    BladeWarp = 37726, // BossP2->self, 3.7s cast, visual (places swords, no player damage)
+    ForgedTrackVisual = 37727, // BossP2->self, 3.7s cast, visual (no player damage)
+    ForgedTrackPreview = 37729, // Helper->self, 11.6s cast, outer-arena sword-path telegraph (0 hits in CST!) - TODO: component
+    ForgedTrackAOE = 37730, // Fang (OID 0x42AA)->self, instant cast, sword-charge damage along path - TODO: component paired with preview
 }
