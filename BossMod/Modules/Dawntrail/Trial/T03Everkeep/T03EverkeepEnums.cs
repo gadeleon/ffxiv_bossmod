@@ -21,4 +21,5 @@ public enum AID : uint
     SoulOverflowEnrage = 37744, // Boss->self, 6.7s cast, raidwide + inflicts bleed DoT (phase transition / enrage)
     PatricidalPique = 37715, // Boss->MT, 4.7s cast, single-target tankbuster
     CalamitysEdge = 37708, // Boss->self, 4.7s cast, raidwide
+    Burst = 37709, // ShadowOfTural->self, 7.7s cast, range 8 circle (8 adds spawn in a pattern, each casts)
 }
