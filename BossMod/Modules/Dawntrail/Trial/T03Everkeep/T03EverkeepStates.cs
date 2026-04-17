@@ -30,7 +30,8 @@ class T03EverkeepStates : StateMachineBuilder
         SimpleState(id, 10000, "P2")
             .ActivateOnEnter<DawnOfAnAge>()
             .ActivateOnEnter<Actualize>()
-            .ActivateOnEnter<ChasmOfVollok>();
+            .ActivateOnEnter<ChasmOfVollok>()
+            .ActivateOnEnter<DutysEdge>();
         // phase 2 mechanics activated as they are implemented
     }
 }

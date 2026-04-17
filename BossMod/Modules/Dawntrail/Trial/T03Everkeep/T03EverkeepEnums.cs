@@ -50,4 +50,10 @@ public enum AID : uint
     ForgedTrackVisual = 37727, // BossP2->self, 3.7s cast, visual (no player damage)
     ForgedTrackPreview = 37729, // Helper->self, 11.6s cast, outer-arena sword-path telegraph (0 hits in CST!) - TODO: component
     ForgedTrackAOE = 37730, // Fang (OID 0x42AA)->self, instant cast, sword-charge damage along path - TODO: component paired with preview
+
+    // Duty's Edge: target selection (35567) -> boss visual (37748) -> 4 repeated line-stack hits (37749 visual + 37750 damage)
+    DutysEdgeTarget = 35567, // Helper->player, instant, target marker (shared AID with Ex2)
+    DutysEdgeVisual = 37748, // BossP2->self, 4.6s cast, visual (mechanic start)
+    DutysEdgeRepeat = 37749, // BossP2->self, 2.1s cast, visual (fires 4x repeated with 37750)
+    DutysEdgeAOE = 37750, // Helper->self, instant, range 100 width 8 rect line-stack (distinct from Ex2 AID 38055)
 }
