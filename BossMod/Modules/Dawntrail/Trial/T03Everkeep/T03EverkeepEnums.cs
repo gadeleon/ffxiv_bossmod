@@ -64,4 +64,11 @@ public enum AID : uint
     // Bitter Reaping: two simultaneous single-target tankbusters on MT + OT (distinct from Ex2 Bitter Whirlwind which is 3-hit tank-swap)
     BitterReapingVisual = 37753, // BossP2->self, 4.1s cast, visual only
     BitterReapingAOE = 37754, // Helper->player, 4.7s cast, single-target tankbuster (2 simultaneous casts targeting MT + Wuk/OT)
+
+    // Half Circuit: 3 simultaneous AoEs — always a side-cleave rect + (circle OR donut) center shape
+    HalfCircuitVisualCircle = 37739, // BossP2->self, 6.7s cast, visual paired with circle variant (shared AID with Ex2)
+    HalfCircuitVisualDonut = 37740, // BossP2->self, 6.7s cast, visual paired with donut variant (shared AID with Ex2)
+    HalfCircuitRect = 37741, // Helper->self, 7.0s cast, range 60 width 120 rect (always fires, rotation varies)
+    HalfCircuitDonut = 37742, // Helper->self, 6.7s cast, range 10-30 donut (center safe)
+    HalfCircuitCircle = 37743, // Helper->self, 6.7s cast, range 10 circle (outer safe)
 }

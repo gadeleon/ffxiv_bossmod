@@ -33,7 +33,10 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<ChasmOfVollok>()
             .ActivateOnEnter<DutysEdge>()
             .ActivateOnEnter<HalfFull>()
-            .ActivateOnEnter<BitterReaping>();
+            .ActivateOnEnter<BitterReaping>()
+            .ActivateOnEnter<HalfCircuitRect>()
+            .ActivateOnEnter<HalfCircuitDonut>()
+            .ActivateOnEnter<HalfCircuitCircle>();
         // phase 2 mechanics activated as they are implemented
     }
 }
