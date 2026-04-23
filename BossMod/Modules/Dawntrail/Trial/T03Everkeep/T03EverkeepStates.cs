@@ -9,8 +9,11 @@ class T03EverkeepStates : StateMachineBuilder
         _module = module;
         SimplePhase(0, Phase1, "P1")
             .Raw.Update = () => Module.PrimaryActor.IsDeadOrDestroyed || (Module.PrimaryActor.CastInfo?.IsSpell(AID.SoulOverflowEnrage) ?? false);
+        // P2 ends only when a BossP2 has been defeated (HP = 0). Missing/destroyed BossP2 is not
+        // sufficient on its own — the actor is briefly destroyed and re-spawned when the arena
+        // shrinks at the big ENVC block, and we must not unload the module during that gap.
         SimplePhase(1, Phase2, "P2")
-            .Raw.Update = () => Module.PrimaryActor.IsDeadOrDestroyed && (_module.BossP2()?.IsDeadOrDestroyed ?? true);
+            .Raw.Update = () => Module.PrimaryActor.IsDeadOrDestroyed && (_module.BossP2()?.IsDead ?? false);
     }
 
     private void Phase1(uint id)

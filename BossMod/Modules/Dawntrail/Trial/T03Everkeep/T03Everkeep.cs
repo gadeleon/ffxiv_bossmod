@@ -6,18 +6,16 @@ public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary,
     public static readonly ArenaBoundsRect NormalBounds = new(20, 20, 45.Degrees());
     public static readonly ArenaBoundsRect SmallBounds = new(10, 10, 45.Degrees(), 20);
 
-    private Actor? _bossP2;
     public Actor? BossP1() => PrimaryActor;
-    public Actor? BossP2() => _bossP2;
 
-    protected override void UpdateModule()
-    {
-        _bossP2 ??= StateMachine.ActivePhaseIndex > 0 ? Enemies(OID.BossP2).FirstOrDefault() : null;
-    }
+    // The P2 boss actor is re-spawned mid-fight (the old instance is destroyed and a new one with
+    // the same OID is spawned ~0.4s later during the big arena transition), so we query dynamically
+    // and skip destroyed instances instead of caching the first one we see.
+    public Actor? BossP2() => Enemies(OID.BossP2).FirstOrDefault(a => !a.IsDestroyed);
 
     protected override void DrawEnemies(int pcSlot, Actor pc)
     {
         Arena.Actor(PrimaryActor, ArenaColor.Enemy);
-        Arena.Actor(_bossP2, ArenaColor.Enemy);
+        Arena.Actor(BossP2(), ArenaColor.Enemy);
     }
 }
