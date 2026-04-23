@@ -27,9 +27,10 @@ public enum AID : uint
 
     // Vorpal Trail: Fang adds charge across arena leaving a trail of circles
     VorpalTrailVisual = 37710, // Boss->self, 3.4s cast, single-target visual (mechanic start)
-    VorpalTrailSprint = 37711, // Fang->self, 0.7s cast, internal sprint tick (no player damage)
-    VorpalTrailAOE = 37712, // Helper->location, 2.0s cast, range 6 circle (trail puddle)
-    VorpalTrailTelegraph = 38184, // Helper->location, 4.0s cast, 0-hit path telegraph
+    VorpalTrailSprint = 37711, // Fang->self, 0.7s cast, sprint telegraph (fang rotates 90° CW after cast then sprints forward)
+    VorpalTrailAOE = 37712, // Helper->location, 2.0s cast, rect puddle at sprint waypoint
+    VorpalTrailInitial = 38183, // Fang->self, instant cast fired at initial sprint start; TargetPos = first waypoint endpoint
+    VorpalTrailTelegraph = 38184, // Helper->location, 4.0s cast, 0-hit path telegraph along outer perimeter
 
     // Double-edged Swords: two half-arena cleaves in sequence (forward-then-backward)
     DoubleEdgedSwordsVisual = 37713, // Boss->self, 4.1s cast, single-target visual (mechanic start)
