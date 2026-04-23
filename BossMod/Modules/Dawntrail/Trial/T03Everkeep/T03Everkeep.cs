@@ -1,8 +1,11 @@
 namespace BossMod.Dawntrail.Trial.T03Everkeep;
 
 [ModuleInfo(BossModuleInfo.Maturity.Contributed, Contributors = "Gabriel Deleon", PrimaryActorOID = (uint)OID.Boss, GroupType = BossModuleInfo.GroupType.CFC, GroupID = 995, NameID = 12881)]
-public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), new ArenaBoundsRect(20, 20, 45.Degrees()))
+public class T03Everkeep(WorldState ws, Actor primary) : BossModule(ws, primary, new(100, 100), NormalBounds)
 {
+    public static readonly ArenaBoundsRect NormalBounds = new(20, 20, 45.Degrees());
+    public static readonly ArenaBoundsRect SmallBounds = new(10, 10, 45.Degrees(), 20);
+
     private Actor? _bossP2;
     public Actor? BossP1() => PrimaryActor;
     public Actor? BossP2() => _bossP2;
