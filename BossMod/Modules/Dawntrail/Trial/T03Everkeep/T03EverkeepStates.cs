@@ -12,7 +12,7 @@ class T03EverkeepStates : StateMachineBuilder
         // P2 ends only when a BossP2 has been defeated (HP = 0). Missing/destroyed BossP2 is not
         // sufficient on its own — the actor is briefly destroyed and re-spawned when the arena
         // shrinks at the big ENVC block, and we must not unload the module during that gap.
-        SimplePhase(1, Phase2, "P2")
+        SimplePhase(1, Phase2, "Enrage")
             .Raw.Update = () => Module.PrimaryActor.IsDeadOrDestroyed && (_module.BossP2()?.IsDead ?? false);
     }
 
