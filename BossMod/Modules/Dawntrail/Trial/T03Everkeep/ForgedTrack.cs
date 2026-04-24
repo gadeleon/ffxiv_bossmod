@@ -7,11 +7,14 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 //
 // The lane relationship between preview and damage has two patterns, keyed off the cast rotation:
 // - NE-SW diagonal (rot -45° or +135°): damage lane is offset ±5 perpendicular from preview lane,
-//   with the sign determined by Gateway's rotation (captured from its cast).
+//   with the sign determined by BladeWarp's direction: sign(dir.X + dir.Z), captured from its cast.
+//   Equivalent to sign(sin(θ + 45°)) — i.e. which side of the NE-SW axis BladeWarp points toward.
 // - NW-SE diagonal (rot +45° or -135°): damage lane coincides with preview lane (no offset).
 //
-// MapEffect indices 11-14 (state 0x00020001 vs 0x00200010) also encode which platforms are in
-// which pattern, but rotation is sufficient for the two cases we observe.
+// Earlier revision used Gateway's rotation sign; that held for two observed replays but broke on a
+// third (Gateway -6.6° but needed +offset). BladeWarp's direction is the actual physical cue for
+// which side of the diagonal the damage lane shifts toward. MapEffect indices 11-14 also encode
+// this via state bits, but BladeWarp is simpler to read and fires before the previews resolve.
 class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
 {
     private readonly Dictionary<ulong, AOEInstance> _aoes = [];
@@ -21,12 +24,15 @@ class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
     private const float ForwardOffset = 30f;
     private const float PerpOffsetMagnitude = 5f;
 
-    private float _gatewaySign; // +1 / -1, captured from Gateway cast; 0 if not yet seen.
+    private float _perpSign; // +1 / -1, captured from BladeWarp direction; 0 if not yet seen.
 
     public override void OnEventCast(Actor caster, ActorCastEvent spell)
     {
-        if ((AID)spell.Action.ID == AID.Gateway)
-            _gatewaySign = spell.Rotation.Rad >= 0 ? 1f : -1f;
+        if ((AID)spell.Action.ID == AID.BladeWarp)
+        {
+            var dir = spell.Rotation.ToDirection();
+            _perpSign = dir.X + dir.Z >= 0 ? 1f : -1f;
+        }
     }
 
     public override void OnCastStarted(Actor caster, ActorCastInfo spell)
@@ -37,8 +43,8 @@ class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
         var dir = spell.Rotation.ToDirection();
         // NE-SW diagonal: dir.X and dir.Z have opposite signs; NW-SE: same signs.
         var isNESWDiagonal = dir.X * dir.Z < 0;
-        var perpOffset = isNESWDiagonal && _gatewaySign != 0
-            ? dir.OrthoL() * (PerpOffsetMagnitude * _gatewaySign)
+        var perpOffset = isNESWDiagonal && _perpSign != 0
+            ? dir.OrthoL() * (PerpOffsetMagnitude * _perpSign)
             : default;
         var origin = caster.Position + dir * ForwardOffset + perpOffset;
         _aoes[caster.InstanceID] = new AOEInstance(_shape, origin, spell.Rotation, Module.CastFinishAt(spell));
