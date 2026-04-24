@@ -40,8 +40,10 @@ class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
         if ((AID)spell.Action.ID != AID.VorpalTrailSprint)
             return;
         // Subsequent sprints form a pinwheel — narrower arms + extend back by 2 so the rect reaches
-        // the 233C helper sitting 2 units behind the fang's sprint-start position.
-        SetRect(caster.InstanceID, caster.Position, spell.LocXZ, 2.5f, 1.5f, 2f, Module.CastFinishAt(spell, 1.0f));
+        // the 233C helper sitting 2 units behind the fang's sprint-start position. HalfWidth bumped
+        // from 2.5 to 2.75 so adjacent converging lanes overlap slightly — a raw 2.5 left a ~1m
+        // sliver at the pinwheel center that the AI read as safe but the player hitbox clipped.
+        SetRect(caster.InstanceID, caster.Position, spell.LocXZ, 2.75f, 1.5f, 2f, Module.CastFinishAt(spell, 1.0f));
     }
 
     private void SetRect(ulong fangId, WPos from, WPos to, float halfWidth, float frontExt, float backExt, DateTime expiration)
