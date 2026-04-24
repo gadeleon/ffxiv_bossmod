@@ -35,6 +35,7 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<Actualize>()
             .ActivateOnEnter<ChasmOfVollok>()
             .ActivateOnEnter<DutysEdge>()
+            .ActivateOnEnter<ForgedTrack>()
             .ActivateOnEnter<HalfFull>()
             .ActivateOnEnter<BitterReaping>()
             .ActivateOnEnter<HalfCircuitRect>()
