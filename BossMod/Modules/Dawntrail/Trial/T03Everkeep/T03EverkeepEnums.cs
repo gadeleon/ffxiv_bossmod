@@ -67,6 +67,9 @@ public enum AID : uint
     BitterReapingVisual = 37753, // BossP2->self, 4.1s cast, visual only
     BitterReapingAOE = 37754, // Helper->player, 4.7s cast, single-target tankbuster (2 simultaneous casts targeting MT + Wuk/OT)
 
+    // Fire III: spread — icon 376 appears on each party member, ~5s later 8 helpers instant-cast a per-target circle on each
+    FireIII = 37752, // Helper->player, instant cast, single-target spread circle (one per party member)
+
     // Half Circuit: 3 simultaneous AoEs — always a side-cleave rect + (circle OR donut) center shape
     HalfCircuitVisualCircle = 37739, // BossP2->self, 6.7s cast, visual paired with circle variant (shared AID with Ex2)
     HalfCircuitVisualDonut = 37740, // BossP2->self, 6.7s cast, visual paired with donut variant (shared AID with Ex2)
