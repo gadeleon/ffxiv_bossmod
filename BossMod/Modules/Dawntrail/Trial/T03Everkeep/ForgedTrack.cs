@@ -5,16 +5,17 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 // the preview resolves, a separate inner Fang instant-casts 37730 for the actual damage along a
 // parallel lane.
 //
-// The lane relationship between preview and damage has two patterns, keyed off the cast rotation:
-// - NE-SW diagonal (rot -45° or +135°): damage lane is offset ±5 perpendicular from preview lane,
-//   with the sign determined by BladeWarp's direction: sign(dir.X + dir.Z), captured from its cast.
-//   Equivalent to sign(sin(θ + 45°)) — i.e. which side of the NE-SW axis BladeWarp points toward.
-// - NW-SE diagonal (rot +45° or -135°): damage lane coincides with preview lane (no offset).
+// The lane relationship between preview and damage:
+// - NW-SE diagonal (rot +45° / -135°): damage lane coincides with preview lane (no offset).
+// - NE-SW diagonal (rot -45° / +135°): damage lane is 5m perpendicular from preview lane. Offset
+//   direction is determined per-fang by which lane the outer fang stands on.
 //
-// Earlier revision used Gateway's rotation sign; that held for two observed replays but broke on a
-// third (Gateway -6.6° but needed +offset). BladeWarp's direction is the actual physical cue for
-// which side of the diagonal the damage lane shifts toward. MapEffect indices 11-14 also encode
-// this via state bits, but BladeWarp is simpler to read and fires before the previews resolve.
+// The four valid NE-SW lanes within the arena lie at perpendicular offsets of -7.5, -2.5, +2.5,
+// +7.5 from arena center (each 5m wide, the arena is 20m across the diamond). They form two
+// interleaved pairs: outer fangs spawn on one pair, inner damage fangs on the other. So the
+// offset sign alternates between adjacent lanes — `floor(perp / 5)` parity gives the right sign.
+// Verified across 5 observed waves; earlier BladeWarp- and Gateway-rotation rules each fit
+// some subset but failed on one wave where the outer pair flipped to the opposite lane set.
 class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
 {
     private readonly Dictionary<ulong, AOEInstance> _aoes = [];
@@ -24,28 +25,22 @@ class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
     private const float ForwardOffset = 30f;
     private const float PerpOffsetMagnitude = 5f;
 
-    private float _perpSign; // +1 / -1, captured from BladeWarp direction; 0 if not yet seen.
-
-    public override void OnEventCast(Actor caster, ActorCastEvent spell)
-    {
-        if ((AID)spell.Action.ID == AID.BladeWarp)
-        {
-            var dir = spell.Rotation.ToDirection();
-            _perpSign = dir.X + dir.Z >= 0 ? 1f : -1f;
-        }
-    }
-
     public override void OnCastStarted(Actor caster, ActorCastInfo spell)
     {
         if ((AID)spell.Action.ID != AID.ForgedTrackPreview)
             return;
 
         var dir = spell.Rotation.ToDirection();
-        // NE-SW diagonal: dir.X and dir.Z have opposite signs; NW-SE: same signs.
-        var isNESWDiagonal = dir.X * dir.Z < 0;
-        var perpOffset = isNESWDiagonal && _perpSign != 0
-            ? dir.OrthoL() * (PerpOffsetMagnitude * _perpSign)
-            : default;
+        // NE-SW diagonal: dir.X and dir.Z have opposite signs; NW-SE: same signs (no offset).
+        var perpOffset = default(WDir);
+        if (dir.X * dir.Z < 0)
+        {
+            var orthoL = dir.OrthoL();
+            var perp = (caster.Position - Module.Center).Dot(orthoL);
+            var laneIndex = (int)MathF.Floor(perp / PerpOffsetMagnitude);
+            var perpSign = laneIndex % 2 == 0 ? 1f : -1f;
+            perpOffset = orthoL * (PerpOffsetMagnitude * perpSign);
+        }
         var origin = caster.Position + dir * ForwardOffset + perpOffset;
         _aoes[caster.InstanceID] = new AOEInstance(_shape, origin, spell.Rotation, Module.CastFinishAt(spell));
     }
