@@ -9,9 +9,9 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 //
 // In Mode B the outer 37720 cell maps deterministically to its inner 37722 damage cell: shift
 // ~21.21m (= 30/√2, three 5m cells along the rotated grid) toward the arena center along both
-// world X and Z axes. Verified across 5 waves of the test replay. We render the predicted damage
-// cell with 6.7s warning so the AI has time to reposition. When 37722 actually fires, its rect
-// also renders (final-moment reminder, redundant with the predicted one).
+// world X and Z axes. We render the predicted damage cell with 6.7s warning so the AI has time
+// to reposition. When 37722 actually fires, its rect also renders (final-moment reminder,
+// redundant with the predicted one).
 //
 // Origin-at-back-corner shape (5f forward + 0 back): cast targets sit at the back corner of each
 // 5×5 cell, not the center, so we extend the rect 5 forward from its origin.

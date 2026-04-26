@@ -39,7 +39,6 @@ class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
             return;
         if ((AID)spell.Action.ID != AID.VorpalTrailInitial)
             return;
-        // Initial-sprint rects tile the outer diamond perimeter flush — wide halfwidth + back extension.
         SetRect(caster.InstanceID, caster.Position, spell.TargetXZ, 4f, 0f, 3f, WorldState.FutureTime(1.5f));
     }
 
@@ -49,10 +48,7 @@ class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
             return;
         if ((AID)spell.Action.ID != AID.VorpalTrailSprint)
             return;
-        // Subsequent sprints form a pinwheel — narrower arms + extend back by 2 so the rect reaches
-        // the 233C helper sitting 2 units behind the fang's sprint-start position. HalfWidth bumped
-        // from 2.5 to 2.75 so adjacent converging lanes overlap slightly — a raw 2.5 left a ~1m
-        // sliver at the pinwheel center that the AI read as safe but the player hitbox clipped.
+        // Back extension reaches the 233C helper sitting 2 units behind the fang's sprint-start position.
         SetRect(caster.InstanceID, caster.Position, spell.LocXZ, 2.5f, 2.0f, 2.5f, Module.CastFinishAt(spell, 1.0f));
     }
 

@@ -14,8 +14,6 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 // +7.5 from arena center (each 5m wide, the arena is 20m across the diamond). They form two
 // interleaved pairs: outer fangs spawn on one pair, inner damage fangs on the other. So the
 // offset sign alternates between adjacent lanes — `floor(perp / 5)` parity gives the right sign.
-// Verified across 5 observed waves; earlier BladeWarp- and Gateway-rotation rules each fit
-// some subset but failed on one wave where the outer pair flipped to the opposite lane set.
 class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
 {
     private readonly Dictionary<ulong, AOEInstance> _aoes = [];
@@ -32,9 +30,7 @@ class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
     private static readonly AOEShapeRect _shape = new(20f, 2.5f);
     private const float ForwardOffset = 30f;
     private const float PerpOffsetMagnitude = 5f;
-    // 37730 damage hits ~1.4s after the 11.6s preview cast resolves; previously we dropped the rect
-    // at preview finish, leaving a ~1.3s window with no rendered danger that the AI happily pathed
-    // through. Activation now points at the real lethal moment so the zone stays forbidden until then.
+    // Activation = predicted damage moment so the rect stays forbidden through the preview→damage gap.
     private const float DamageDelayAfterPreview = 1.4f;
 
     public override void OnCastStarted(Actor caster, ActorCastInfo spell)

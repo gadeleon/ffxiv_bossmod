@@ -44,6 +44,5 @@ class T03EverkeepStates : StateMachineBuilder
             .ActivateOnEnter<HalfCircuitCircle>()
             .ActivateOnEnter<SmitingCircuitDonut>()
             .ActivateOnEnter<SmitingCircuitCircle>();
-        // phase 2 mechanics activated as they are implemented
     }
 }
