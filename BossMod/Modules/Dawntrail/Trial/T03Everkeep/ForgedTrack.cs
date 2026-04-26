@@ -19,11 +19,23 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
 {
     private readonly Dictionary<ulong, AOEInstance> _aoes = [];
-    public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor) => _aoes.Values;
+
+    public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
+    {
+        // Preview entries linger past activation until the actual 37730 fires — auto-cull stale ones.
+        var cutoff = WorldState.CurrentTime.AddSeconds(-0.5);
+        foreach (var id in _aoes.Where(kv => kv.Value.Activation < cutoff).Select(kv => kv.Key).ToList())
+            _aoes.Remove(id);
+        return _aoes.Values;
+    }
 
     private static readonly AOEShapeRect _shape = new(20f, 2.5f);
     private const float ForwardOffset = 30f;
     private const float PerpOffsetMagnitude = 5f;
+    // 37730 damage hits ~1.4s after the 11.6s preview cast resolves; previously we dropped the rect
+    // at preview finish, leaving a ~1.3s window with no rendered danger that the AI happily pathed
+    // through. Activation now points at the real lethal moment so the zone stays forbidden until then.
+    private const float DamageDelayAfterPreview = 1.4f;
 
     public override void OnCastStarted(Actor caster, ActorCastInfo spell)
     {
@@ -42,12 +54,6 @@ class ForgedTrack(BossModule module) : Components.GenericAOEs(module)
             perpOffset = orthoL * (PerpOffsetMagnitude * perpSign);
         }
         var origin = caster.Position + dir * ForwardOffset + perpOffset;
-        _aoes[caster.InstanceID] = new AOEInstance(_shape, origin, spell.Rotation, Module.CastFinishAt(spell));
-    }
-
-    public override void OnCastFinished(Actor caster, ActorCastInfo spell)
-    {
-        if ((AID)spell.Action.ID == AID.ForgedTrackPreview)
-            _aoes.Remove(caster.InstanceID);
+        _aoes[caster.InstanceID] = new AOEInstance(_shape, origin, spell.Rotation, Module.CastFinishAt(spell, DamageDelayAfterPreview));
     }
 }
