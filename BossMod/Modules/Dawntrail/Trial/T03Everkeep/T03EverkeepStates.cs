@@ -18,7 +18,7 @@ class T03EverkeepStates : StateMachineBuilder
 
     private void Phase1(uint id)
     {
-        SimpleState(id, 10000, "P1")
+        SimpleState(id, 10000, "Enrage")
             .ActivateOnEnter<SoulOverflow>()
             .ActivateOnEnter<SoulOverflowEnrage>()
             .ActivateOnEnter<PatricidalPique>()
@@ -30,7 +30,7 @@ class T03EverkeepStates : StateMachineBuilder
 
     private void Phase2(uint id)
     {
-        SimpleState(id, 10000, "P2")
+        SimpleState(id, 10000, "Enrage")
             .ActivateOnEnter<DawnOfAnAge>()
             .ActivateOnEnter<Actualize>()
             .ActivateOnEnter<ChasmOfVollok>()
