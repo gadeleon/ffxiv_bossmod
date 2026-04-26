@@ -14,6 +14,7 @@ namespace BossMod.Dawntrail.Trial.T03Everkeep;
 class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
 {
     private readonly Dictionary<ulong, AOEInstance> _fangAOE = [];
+    private static readonly AOEShapeCircle _centerKeepout = new(6f);
 
     public override IEnumerable<AOEInstance> ActiveAOEs(int slot, Actor actor)
     {
@@ -21,6 +22,15 @@ class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
         foreach (var id in _fangAOE.Where(kv => kv.Value.Activation < now).Select(kv => kv.Key).ToList())
             _fangAOE.Remove(id);
         return _fangAOE.Values;
+    }
+
+    public override void AddAIHints(int slot, Actor actor, PartyRolesConfig.Assignment assignment, AIHints hints)
+    {
+        base.AddAIHints(slot, actor, assignment, hints);
+        // Pinwheel safe-spots all sit near the perimeter; a central keepout stops the AI from
+        // settling on the apparent gap between converging rects at the convergence point.
+        if (_fangAOE.Count > 0)
+            hints.AddForbiddenZone(_centerKeepout, Module.Center);
     }
 
     public override void OnEventCast(Actor caster, ActorCastEvent spell)
@@ -43,7 +53,7 @@ class VorpalTrail(BossModule module) : Components.GenericAOEs(module)
         // the 233C helper sitting 2 units behind the fang's sprint-start position. HalfWidth bumped
         // from 2.5 to 2.75 so adjacent converging lanes overlap slightly — a raw 2.5 left a ~1m
         // sliver at the pinwheel center that the AI read as safe but the player hitbox clipped.
-        SetRect(caster.InstanceID, caster.Position, spell.LocXZ, 2.75f, 1.5f, 2f, Module.CastFinishAt(spell, 1.0f));
+        SetRect(caster.InstanceID, caster.Position, spell.LocXZ, 2.5f, 2.0f, 2.5f, Module.CastFinishAt(spell, 1.0f));
     }
 
     private void SetRect(ulong fangId, WPos from, WPos to, float halfWidth, float frontExt, float backExt, DateTime expiration)
