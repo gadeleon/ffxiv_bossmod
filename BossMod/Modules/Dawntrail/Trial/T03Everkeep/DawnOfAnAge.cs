@@ -22,4 +22,29 @@ class DawnOfAnAge(BossModule module) : Components.RaidwideCast(module, AID.DawnO
         foreach (var c in Casters)
             hints.AddForbiddenZone(p => !bounds.Contains(p - center), Module.CastFinishAt(c.CastInfo));
     }
+
+    // Cardinal extents of the rotated-45° diamonds: corners sit at half-extent × √2 from center.
+    private static readonly float OuterCardinal = 20f * MathF.Sqrt(2);
+    private static readonly float InnerCardinal = 10f * MathF.Sqrt(2);
+
+    public override void DrawArenaBackground(int pcSlot, Actor pc)
+    {
+        if (Casters.Count == 0)
+            return;
+        // Paint the four diamond wings that will collapse — the donut between SmallBounds and
+        // NormalBounds, drawn as four quadrilaterals between adjacent diamond cardinals.
+        var c = Module.Center;
+        var nO = new WPos(c.X, c.Z - OuterCardinal);
+        var eO = new WPos(c.X + OuterCardinal, c.Z);
+        var sO = new WPos(c.X, c.Z + OuterCardinal);
+        var wO = new WPos(c.X - OuterCardinal, c.Z);
+        var nI = new WPos(c.X, c.Z - InnerCardinal);
+        var eI = new WPos(c.X + InnerCardinal, c.Z);
+        var sI = new WPos(c.X, c.Z + InnerCardinal);
+        var wI = new WPos(c.X - InnerCardinal, c.Z);
+        Arena.ZonePoly("doaa-ne", new[] { nO, eO, eI, nI }, ArenaColor.AOE);
+        Arena.ZonePoly("doaa-se", new[] { eO, sO, sI, eI }, ArenaColor.AOE);
+        Arena.ZonePoly("doaa-sw", new[] { sO, wO, wI, sI }, ArenaColor.AOE);
+        Arena.ZonePoly("doaa-nw", new[] { wO, nO, nI, wI }, ArenaColor.AOE);
+    }
 }
