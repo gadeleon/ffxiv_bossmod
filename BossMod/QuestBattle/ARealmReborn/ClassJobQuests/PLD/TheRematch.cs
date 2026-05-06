@@ -1,4 +1,4 @@
-﻿// Note: Due to the NPC Skill Blind, there's some randomness in because Allied NPCs may or may not survive.
+﻿// Note: Due to the NPC Skill Blind, there's some randomness in how many Allied NPCs may or may not survive.
 // This route plays it extremely safe and assumes only Mylla is alive to take out ignored mobs in this module.
 
 namespace BossMod.QuestBattle.ARealmReborn.ClassJobQuests.PLD;
@@ -29,7 +29,6 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
                 };
             }),
         new QuestObjective(ws) // Take out Ambushing Archers
-            //.WithConnection(new Vector3(5.12009f, -17.544205f, 23.051228f))
             .WithConnection(new Vector3(5.4512296f, -17.544205f, 22.28043f))
             .PauseForCombat(false)
             .Hints((player, hints) =>
@@ -41,7 +40,6 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
             })
             .CompleteOnKilled(0x295, 2),
         new QuestObjective(ws) // Take out Ambushing Thaumaturges (0x296)
-            //.WithConnection(new Vector3(18.953478f, -6.0142717f, -3.4347162f))
             .PauseForCombat(false)
             .Hints((player, hints) =>
                 {
@@ -72,7 +70,7 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
                         e.Priority = AIHints.Enemy.PriorityForbidden;
             })
             .CompleteOnKilled(0x297, 1),
-        new QuestObjective(ws) // Wait for Gigrya to separate from his Lancers.
+        new QuestObjective(ws) // Wait for Gigirya to separate from his Lancers.
             .WithConnection(new Vector3(5.2827086f, -7.8521442f, 1.292858f))
             .ThenWait(25.0f)
             .PauseForCombat(false)
@@ -93,7 +91,7 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
                 hints.PrioritizeTargetsByOID(0x290,5);
             })
             .CompleteOnKilled(0x290),
-        new QuestObjective(ws) // Target Void Slave, Remaining Mobs will be Handled by AI
+        new QuestObjective(ws) // Target Void Slave, Remaining Mobs will be Handled by BossMod's AI
             .PauseForCombat(false)
             .Hints((player, hints) =>
             {
@@ -105,70 +103,3 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
             .CompleteOnKilled(0x29C)
     ];
 }
-
-
-/*
-[ ] Resolve GameData
-1AF6581D090:4000B68E[PreviousTarget] - BattleNpc - Leavold, Sword of Thal - X-2.2125854 Y-7.1800265 Z-33.24945 D16 R-0.063421726 - Target: 4000B68F
-       Level: 50 ClassJob: 1 CHP: 256464 MHP: 258900 CMP: 27000 MMP: 28000
-       Customize: 01 00 01 64 01 05 07 01 01 01 04 B0 40 05 05 01 80 01 03 00 03 64 00 00 00 00 StatusFlags: Hostile, InCombat, WeaponOut
-[ C ]
-[ Clear CT ]
-[ Clear FT ]
-[ Set CT ]
-[ Set FT ] |
-*/
-
-// new(14.195155f, -6.0142727f, 0.2007984f)
-// new(9.84198f, -7.6376314f, 2.670288f)
-/*
- * "DataId": 662,
-          "Position": {
-            "X": 9.84198,
-            "Y": -7.6376314,
-            "Z": 2.670288
-          },
-          "TerritoryId": 257,
-          "InteractionType": "Interact"
- */
-
-/*
- "DataId": 656, // Gigirya
-          "Position": {
-            "X": 25.009521,
-            "Y": -6.014861,
-            "Z": -11.551086
-          },
-          "TerritoryId": 257,
-          "InteractionType": "Interact"
-*/
-
-/*"DataId": 687, // Gotwin
-          "Position": {
-            "X": -4.3183594,
-            "Y": -10.015328,
-            "Z": -15.091187
-          },
-          "TerritoryId": 257,
-          "InteractionType": "Interact"
-          */
-
-// 658 Starting Archer
-// 659 Starting Lancer
-// 661 Archer
-// 662 Tahuma
-// 687 Gotwin
-// 656 Gigirya
-// Void Thingy
-
-
-/*
-"DataId": 1324,
-          "Position": {
-            "X": -2.2125854,
-            "Y": -7.1800265,
-            "Z": -33.24945
-          },
-          "TerritoryId": 257,
-          "InteractionType": "Interact"
-*/
