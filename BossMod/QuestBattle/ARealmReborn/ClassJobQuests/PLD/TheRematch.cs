@@ -60,43 +60,20 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
                 hints.PrioritizeTargetsByOID(0x2AF,5);
             })
             .CompleteOnKilled(0x2AF),
-        new QuestObjective(ws) // Clear out the last lancer
-            .WithConnection(new Vector3(-0.95f, -10.02f, -16.34f))
-            .PauseForCombat(false)
-            .Hints((player, hints) =>
-            {
-                foreach (var e in hints.PotentialTargets)
-                    if (e.Actor.OID == 0x52C  || e.Actor.OID == 0x298) // Ignore Leavold & Bridge Pugilists otherwise to prevent AoE from Pulling from Mylla
-                        e.Priority = AIHints.Enemy.PriorityForbidden;
-            })
-            .CompleteOnKilled(0x297, 1),
-        new QuestObjective(ws) // Wait for Gigirya to separate from his Lancers.
-            .WithConnection(new Vector3(5.2827086f, -7.8521442f, 1.292858f))
-            .ThenWait(25.0f)
-            .PauseForCombat(false)
-            .Hints((player, hints) =>
-            {
-                foreach (var e in hints.PotentialTargets)
-                    if (e.Actor.OID == 0x52C || e.Actor.OID == 0x297 || e.Actor.OID == 0x290 ||  e.Actor.OID == 0x298) // Ignore all mobs while NPCs position
-                        e.Priority = AIHints.Enemy.PriorityForbidden;
-            }),
         new QuestObjective(ws) // Target Gigrya; Note: may complete Duty here once remaining NPCs die
-            .WithConnection(new Vector3(15.304749f, -6.0142717f, -4.5930176f))
-            .PauseForCombat(false)
             .Hints((player, hints) =>
             {
                 foreach (var e in hints.PotentialTargets)
-                    if (e.Actor.OID == 0x52C || e.Actor.OID == 0x297  || e.Actor.OID == 0x298 ) // Ignore all other mobs
+                    if (e.Actor.OID == 0x52C) // Ignore Leavold
                         e.Priority = AIHints.Enemy.PriorityForbidden;
                 hints.PrioritizeTargetsByOID(0x290,5);
             })
             .CompleteOnKilled(0x290),
         new QuestObjective(ws) // Target Void Slave, Remaining Mobs will be Handled by BossMod's AI
-            .PauseForCombat(false)
             .Hints((player, hints) =>
             {
                 foreach (var e in hints.PotentialTargets)
-                    if (e.Actor.OID == 0x52C || e.Actor.OID == 0x297 || e.Actor.OID == 0x298) // Ignore all other mobs
+                    if (e.Actor.OID == 0x52C) // Ignore Leavold
                         e.Priority = AIHints.Enemy.PriorityForbidden;
                 hints.PrioritizeTargetsByOID(0x29C,5);
             })
