@@ -12,7 +12,6 @@ internal class TheRematch(WorldState ws) : QuestBattle(ws)
                 foreach (var e in hints.PotentialTargets)
                     if (e.Actor.OID == 0x52C) // Ignore Leavold
                         e.Priority = AIHints.Enemy.PriorityForbidden;
-                hints.PrioritizeTargetsByOID(0x29C,5);
             })
             .CompleteOnKilled(0x290),
         new QuestObjective(ws) // Beginning mobs may have been skipped. They're needed to complete duty.
