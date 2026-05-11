@@ -1,7 +1,4 @@
-﻿// Note: Due to the NPC Skill Blind, there's some randomness in how many Allied NPCs may or may not survive.
-// This route plays it extremely safe and assumes only Mylla is alive to take out ignored mobs in this module.
-
-namespace BossMod.QuestBattle.ARealmReborn.ClassJobQuests.PLD;
+﻿namespace BossMod.QuestBattle.ARealmReborn.ClassJobQuests.PLD;
 
 [ZoneModuleInfo(BossModuleInfo.Maturity.Contributed, 318,257)]
 internal class TheRematch(WorldState ws) : QuestBattle(ws)
